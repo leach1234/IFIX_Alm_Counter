@@ -32,8 +32,14 @@ for names in glob.glob('*.ALM'):
 			site_act = (str(row))
 			site_act = site_act[25:]
 			site_act = site_act[:7]
+			
+			status = (str(row))
+			status = status[66:]
+			status = status[:2]
+			
+			
 			#Check to see if site name match declared site
-			if site_act == site_name or site_name == "":
+			if (site_act == site_name or site_name == "") and status != "OK":
 		
 				#create the alarm tag
 				tag_ID = (str(row))
