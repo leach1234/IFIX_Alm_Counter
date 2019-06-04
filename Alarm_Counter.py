@@ -35,11 +35,11 @@ for names in glob.glob('*.ALM'):
 			
 			status = (str(row))
 			status = status[66:]
-			status = status[:2]
+			status = status[:3]
 			
 			
 			#Check to see if site name match declared site
-			if (site_act == site_name or site_name == "") and status != "OK":
+			if (site_act == site_name or site_name == "") and status == "CFN":
 		
 				#create the alarm tag
 				tag_ID = (str(row))
@@ -58,7 +58,7 @@ for names in glob.glob('*.ALM'):
 					deciption = deciption[-43:-2]
 					deciption = deciption.strip()
 					#create new entry
-					alarm_dict[tag_ID] = [0, deciption]
+					alarm_dict[tag_ID] = [1, deciption]
 
 
 	#create text fill
@@ -73,3 +73,5 @@ for names in glob.glob('*.ALM'):
 		text_file.writelines('\n')
 	#Close the text file		
 	text_file.close()
+	print ("File Processing Complete " + names)
+print("Complete")
