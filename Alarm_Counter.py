@@ -10,7 +10,7 @@ import sys
 import glob
 
 #Declare site name
-site_name ="KNOSTSS"
+site_name =""
 
 
 #Opens all file in local directory
@@ -48,29 +48,34 @@ for names in glob.glob('*.ALM'):
 				#remove trailing spaces
 				tag_ID = tag_ID.strip()
 				
-			
+				time_alm = (str(row))
+				time_alm = time_alm[13:]
+				time_alm = time_alm[:8]
+				#print (time_alm)
 				if (tag_ID in alarm_dict) == True:
 					#exists, therefore only increment counter
 					alarm_dict[tag_ID][0]  += 1
+					alarm_dict[tag_ID][3]  = alarm_dict[tag_ID][3] + "," + str(time_alm)
 				else:
 					#generates the alarm description
 					deciption = (str(row))
 					deciption = deciption[-43:-2]
 					deciption = deciption.strip()
 					#create new entry
-					alarm_dict[tag_ID] = [1, deciption]
+					alarm_dict[tag_ID] = [1, deciption, time_alm, ""]
 
 
 	#create text fill
 	temp_file = names[:6]
 	temp_file = temp_file + ".csv"
-	text_file=open(temp_file,'a')
+	text_file=open(temp_file,'w')
 	#writes the header
-	text_file.writelines('Count, Tag, Desciption\n')
+	text_file.writelines('Count, Tag, Desciption, Time First Occur,, Following Occurance\n')
 	#loop though all directory and then write to text file
 	for items in alarm_dict:
-		text_file.writelines(str(alarm_dict[items][0]) + "," + items + "," + alarm_dict[items][1])
+		text_file.writelines(str(alarm_dict[items][0]) + "," + items + "," + alarm_dict[items][1] + "," + str(alarm_dict[items][2]) + "," + alarm_dict[items][3])
 		text_file.writelines('\n')
+		#print (items)
 	#Close the text file		
 	text_file.close()
 	print ("File Processing Complete " + names)
